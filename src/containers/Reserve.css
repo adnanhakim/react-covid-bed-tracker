@@ -1,0 +1,162 @@
+.reserve {
+   padding: 1rem 2rem 1.5rem 2rem;
+   width: 100%;
+   color: var(--text);
+}
+
+.reserve-form {
+   background: var(--sidebar-background);
+   padding: 2rem 2.5rem;
+   border-radius: 1rem;
+}
+
+.reserve-form > h1 {
+   font-size: 1.3rem;
+}
+
+.reserve-details {
+   margin: 1.5rem 0rem;
+   font-size: 1rem;
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+   width: 100%;
+}
+
+.reserve-container {
+   display: flex;
+   gap: 0.5rem;
+   align-items: center;
+}
+
+.reserve-detail-header {
+   font-size: 1rem;
+   font-weight: 700;
+   flex: 1;
+}
+
+.reserve-detail-body {
+   flex: 4;
+}
+
+.reserve-detail-body > input {
+   width: calc(100% - 2rem);
+   font-size: 1rem;
+   background: var(--background);
+   border: none;
+   outline: none;
+   padding: 0.5rem 1rem;
+   border-radius: 0.5rem;
+   color: var(--text);
+}
+
+.wrapper-class {
+   padding: 0.5rem;
+   background-color: var(--background);
+   border-radius: 0.5rem;
+}
+
+.editor-class {
+   background-color: var(--background);
+   padding: 0.5rem;
+   border: none;
+}
+
+.reserve-salary {
+   display: flex;
+   justify-content: space-between;
+   gap: 0.5rem;
+}
+
+.reserve-select {
+   width: 100% !important;
+   outline: none;
+   border: none;
+   border-radius: 0.5rem;
+   padding: 0.5rem 1rem;
+   font-size: 1rem;
+   background: var(--background);
+   -moz-appearance: none;
+   -webkit-appearance: none;
+   cursor: pointer;
+   color: var(--text);
+}
+
+.reserve-select > select::-ms-expand {
+   display: none;
+}
+
+.reserve-details-list {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 0.5rem;
+   padding: 0;
+   align-items: center;
+   justify-content: flex-start;
+}
+
+.reserve-details-list > li {
+   list-style: none;
+   padding: 0.5rem 1rem;
+   font-size: 0.875rem;
+   background: var(--background);
+   border-radius: 0.5rem;
+   color: var(--text);
+   display: flex;
+   gap: 0.5rem;
+   align-items: center;
+}
+
+.reserve-btn {
+   background-color: var(--accent);
+   color: var(--background);
+   font-size: 1rem;
+   width: 14rem;
+}
+
+@media screen and (max-width: 1024px) {
+   .reserve-detail-body {
+      flex: 5;
+   }
+
+   .reserve-detail-header {
+      flex: 2;
+   }
+}
+
+@media screen and (max-width: 768px) {
+   .reserve {
+      padding: 1rem;
+   }
+
+   .reserve-form {
+      padding: 1.5rem 1.5rem;
+   }
+
+   .reserve-form > h1 {
+      font-size: 1.1rem;
+   }
+
+   .reserve-container {
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+   }
+
+   .reserve-detail-body {
+      width: 100%;
+   }
+
+   .reserve-detail-header {
+      font-size: 0.875rem;
+      font-weight: 700;
+   }
+
+   .reserve-detail > input {
+      font-size: 0.875rem;
+   }
+
+   .reserve-btn {
+      width: 100%;
+   }
+}

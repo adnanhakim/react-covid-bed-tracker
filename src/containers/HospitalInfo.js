@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './HospitalInfo.css';
 import API from '../utils/API';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import CustomLoader from '../components/CustomLoader';
 import { useStateValue } from '../state/StateProvider';
@@ -72,15 +72,22 @@ function HospitalInfo() {
 
             <div className="hospital-info-card">
                <p>{hospital?.address}</p>
-               <button className="hospital-info-">
-                  <a
-                     className="link"
-                     href={`https://www.google.com/maps/search/?api=1&query=${hospital?.latt},${hospital?.long}`}
-                     target="_blank"
-                     rel="noreferrer">
-                     Locate on Google Maps
-                  </a>
-               </button>
+               <div className="hospital-info-btns">
+                  <button className="hospital-info-btn">
+                     <a
+                        className="link"
+                        href={`https://www.google.com/maps/search/?api=1&query=${hospital?.latt},${hospital?.long}`}
+                        target="_blank"
+                        rel="noreferrer">
+                        Locate on Google Maps
+                     </a>
+                  </button>
+                  <button className="hospital-info-btn">
+                     <Link to={`/hospital/${id}/reserve`} className="link">
+                        Reserve a bed
+                     </Link>
+                  </button>
+               </div>
             </div>
          </div>
       </div>

@@ -5,6 +5,7 @@ import Feed from './Feed';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import HospitalInfo from './HospitalInfo';
+import Reserve from './Reserve';
 
 function Dashboard() {
    return (
@@ -14,6 +15,11 @@ function Dashboard() {
             <Navbar />
             <section className="main">
                <Switch>
+                  <Route
+                     path="/hospital/:id/reserve"
+                     exact
+                     component={Reserve}
+                  />
                   <Route path="/hospital/:id" exact component={HospitalInfo} />
                   <Route path="/" component={Feed} />
                </Switch>

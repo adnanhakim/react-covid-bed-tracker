@@ -56,6 +56,12 @@
    font-family: 'Montserrat', 'Lato', sans-serif;
 }
 
-.hospital-info-locate-btn {
+.hospital-info-btns {
+   display: flex;
+   gap: 1rem;
+}
+
+.hospital-info-btn {
    font-size: 1rem;
+   width: 15rem;
 }
