@@ -1,0 +1,27 @@
+.dashboard {
+   width: 100%;
+   height: 100vh;
+   position: absolute;
+}
+
+.container {
+   height: 100%;
+   width: calc(100% - var(--sidebar-width));
+   background-color: var(--background);
+   margin-left: var(--sidebar-width);
+   display: flex;
+   flex-flow: column;
+}
+
+.main {
+   display: flex;
+   justify-content: center;
+   flex: 1 1 auto;
+}
+
+@media screen and (max-width: 768px) {
+   .container {
+      width: 100%;
+      margin-left: 0;
+   }
+}

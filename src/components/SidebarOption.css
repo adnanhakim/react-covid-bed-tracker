@@ -1,0 +1,36 @@
+.sidebar-option {
+   color: var(--text);
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   height: 2.5rem;
+   margin-bottom: 0.5rem;
+}
+
+.sidebar-option-info {
+   color: var(--text);
+   font-size: 0.875rem;
+   font-weight: 400;
+   padding: 0.5rem 1.5rem 0.5rem 1rem;
+   display: flex;
+   align-items: center;
+}
+
+.sidebar-option-logo {
+   margin-right: 0.5rem;
+}
+
+.sidebar-option-line {
+   width: 0.2rem;
+   height: inherit;
+}
+
+.sidebar-option--active > .sidebar-option-info > .sidebar-option-logo,
+.sidebar-option--active > .sidebar-option-info > .sidebar-option-name {
+   color: var(--accent);
+   font-weight: 700;
+}
+
+.sidebar-option--active > .sidebar-option-line {
+   background-color: var(--accent);
+}

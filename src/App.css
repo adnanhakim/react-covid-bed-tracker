@@ -1,7 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 * {
-   padding: 0;
    margin: 0;
-   font-family: 'Lato', sans-serif;
+   font-family: 'Lato';
+   --background: #171a21;
+   --white: #ffffff;
+   --black: #000000;
+   --text: #fff;
+   --accent: #f7c35e;
+   /* --accent: #26525c; */
+   --text-accent: #26525c;
+   --sidebar-background: #2c303b;
+   --error: #dc3545;
+   --success: #28a745;
+   --super-dream-text: #fca504;
+   --super-dream-background: #fce7a9;
+   --dream-text: #757575;
+   --dream-background: #e5e5e5;
+   --normal-text: #aa562a;
+   --normal-background: #d8baaa;
+   --divider-color: #2c303b;
+   --max-width: 1300px;
+   --sidebar-width: 250px;
+   --container-margin: 2rem;
+}
+
+body {
+   background: var(--background);
+   color: var(--text-accent);
+}
+
+button {
+   z-index: 5;
+   cursor: pointer;
+   outline: none;
+   border: none;
+   font-weight: 700;
+   border-radius: 0.5rem;
+   padding: 0.5rem 2rem;
+}
+
+.section {
+   width: 100%;
+}
+
+.link {
+   text-decoration: none;
+   color: var(--text-accent);
+}
+
+.super-dream {
+   background: var(--super-dream-background) !important;
+   color: var(--super-dream-text) !important;
+}
+
+.dream {
+   background: var(--dream-background) !important;
+   color: var(--dream-text) !important;
+}
+
+.normal {
+   background: var(--normal-background) !important;
+   color: var(--normal-text) !important;
+}
+
+.active {
+   color: var(--success);
+}
+
+.inactive {
+   color: var(--error);
+}
+
+.loader {
+   align-self: center;
+}
+
+@media screen and (max-width: 768px) {
+   .link {
+      color: var(--accent);
+   }
 }

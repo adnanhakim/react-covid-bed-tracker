@@ -1,13 +1,17 @@
 import './App.css';
-import { useStateValue } from './state/StateProvider';
+import Dashboard from './containers/Dashboard';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
-   const [{ sidebar }, dispatch] = useStateValue();
-
    return (
-      <div className="App">
-         <h1>{sidebar}</h1>
-      </div>
+      <Router>
+         <div className="App">
+            <Switch>
+               {/* <Route path="/login" exact component={Login} /> */}
+               <Route path="/" component={Dashboard} />
+            </Switch>
+         </div>
+      </Router>
    );
 }
 
