@@ -2,7 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 import SidebarOption from './SidebarOption';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import WorkIcon from '@material-ui/icons/Work';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import PersonIcon from '@material-ui/icons/Person';
@@ -24,10 +24,10 @@ function Sidebar() {
             mobileView
          />
          <SidebarOption
-            Icon={WorkIcon}
-            title={'Jobs'}
+            Icon={LocalHospitalIcon}
+            title={'Hospitals'}
             link={'/'}
-            active={sidebar === 'DASHBOARD'}
+            active={sidebar === 'HOSPITALS'}
             mobileView
          />
          <SidebarOption
