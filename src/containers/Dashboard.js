@@ -22,6 +22,7 @@ function Dashboard() {
                      exact
                      component={Reserve}
                   />
+                  <Route path="/reservation/:id" exact component={Reserve} />
                   <Route path="/reservations" exact component={Reservations} />
                   <Route path="/sendRequest" exact component={Request} />
                   <Route path="/hospital/:id" exact component={HospitalInfo} />

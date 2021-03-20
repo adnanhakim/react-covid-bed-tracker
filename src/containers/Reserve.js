@@ -7,12 +7,15 @@ import Loader from 'react-loader-spinner';
 import firebase from '../utils/firebase';
 import 'firebase/storage';
 import { useStateValue } from '../state/StateProvider';
+import { useLocation } from 'react-router-dom';
 
 const storage = firebase.storage();
 
 function Reserve() {
    const { id } = useParams();
    const [, dispatch] = useStateValue();
+   const location = useLocation();
+   const isReservation = location.pathname.startsWith('/reservation/');
 
    const aadhaarRegex = '^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$';
    const [state, setState] = useState({
@@ -26,6 +29,7 @@ function Reserve() {
    });
    const [file, setFile] = useState('');
    const [hospital, setHospital] = useState({});
+   const [reservation, setReservation] = useState({});
    const [disabled, setDisabled] = useState(false);
 
    useEffect(() => {
@@ -64,12 +68,34 @@ function Reserve() {
          }
       }
 
-      fetchHospitalInfo();
+      async function fetchReservation() {
+         try {
+            setState((prevState) => ({
+               ...prevState,
+               loading: true,
+               message: 'Fetching Reservation',
+            }));
+            const res = await API.get(`/booking/${id}`);
+
+            setReservation(res.data?.data);
+            console.log(res.data?.data);
+
+            setState((prevState) => ({ ...prevState, loading: false }));
+         } catch (err) {
+            setState((prevState) => ({ ...prevState, loading: false }));
+            console.log(err);
+         }
+      }
+
+      if (isReservation) {
+         fetchReservation();
+      } else fetchHospitalInfo();
 
       dispatch({
          type: 'SET_SIDEBAR',
-         sidebar: 'RESERVE',
+         sidebar: isReservation ? 'RESERVATION' : 'RESERVE',
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [id, dispatch]);
 
    useEffect(() => {
@@ -162,42 +188,41 @@ function Reserve() {
          message: 'Reserving a bed',
       }));
 
-      // let formData = new FormData();
       handleImage(file);
+   }
 
-      // console.log(state.aadhaar)
-      // let data = {
-      //    name:state.name,
-      //    age: state.age,
-      //    aadharCard: state.aadhaar,
-      //    type: state.type,
-      //    covidTrace: state.covidTrace,
-      //    pdfLink: pdfLink,
-      //    hospitalId: id
-      // }
-      // formData.append('name', state.name);
-      // formData.append('age', state.age);
-      // formData.append('aadhaarCard', state.aadhaar);
-      // formData.append('type', state.type);
-      // formData.append('covidTrace', state.covidTrace);
-      // const pdfLink = await handleImage(file)
-      // formData.append('pdfLink', pdfLink);
-      //    const res = await API.post('/booking/reserve', data, {
+   async function acceptBed() {
+      try {
+         const res = await API.post('/booking/update', {
+            isAccepted: 1,
+            bookingId: id,
+         });
+         if (res.data?.status) {
+            alert('Updated');
+         } else alert('Error');
+      } catch (err) {
+         console.log(err);
+      }
+   }
 
-      //    });
-
-      //    setState((prevState) => ({ ...prevState, loading: false }));
-      //    console.log(res.data);
-      // } catch (err) {
-      //    setState((prevState) => ({ ...prevState, loading: false }));
-      //    console.log(err);
-      // }
+   async function rejectBed() {
+      try {
+         const res = await API.post('/booking/update', {
+            isAccepted: 2,
+            bookingId: id,
+         });
+         if (res.data?.status) {
+            alert('Updated');
+         } else alert('Error');
+      } catch (err) {
+         console.log(err);
+      }
    }
 
    return (
       <div className="section reserve">
          <div className="reserve-form">
-            <h1>Reserve a bed</h1>
+            <h1>{isReservation ? 'Reservation Details' : 'Reserve a bed'}</h1>
             <div className="reserve-details">
                <div className="reserve-container">
                   <h3 className="reserve-detail-header">Name*</h3>
@@ -205,8 +230,9 @@ function Reserve() {
                      <input
                         type="text"
                         name="name"
-                        value={state.name}
-                        onChange={handleState}
+                        value={isReservation ? reservation?.name : state.name}
+                        onChange={isReservation ? undefined : handleState}
+                        disabled={isReservation}
                         placeholder="Enter the name of the patient"
                      />
                   </div>
@@ -218,8 +244,9 @@ function Reserve() {
                         type="number"
                         name="age"
                         className="reserve-detail-body"
-                        value={state.age}
-                        onChange={handleState}
+                        value={isReservation ? reservation?.age : state.age}
+                        onChange={isReservation ? undefined : handleState}
+                        disabled={isReservation}
                         placeholder="Enter the age of the patient"
                      />
                   </div>
@@ -231,8 +258,13 @@ function Reserve() {
                         type="number"
                         name="aadhaar"
                         className="reserve-detail-body"
-                        value={state.aadhaar}
-                        onChange={handleState}
+                        value={
+                           isReservation
+                              ? reservation?.aadharCard
+                              : state.aadhaar
+                        }
+                        onChange={isReservation ? undefined : handleState}
+                        disabled={isReservation}
                         placeholder="Enter the aadhaar card number of the patient"
                      />
                   </div>
@@ -244,22 +276,34 @@ function Reserve() {
                      <select
                         className=" reserve-select"
                         name="type"
-                        value={state.type}
-                        onChange={handleState}>
+                        value={isReservation ? reservation.type : state.type}
+                        onChange={isReservation ? undefined : handleState}
+                        disabled={isReservation}>
                         <option value="0">Normal Bed</option>
                         <option value="1">ICU without ventilator</option>
                         <option value="2">ICU with ventilator</option>
                      </select>
                   </div>
                </div>
+
                <div className="reserve-container">
                   <h3 className="reserve-detail-header">COVID Report</h3>
                   <div className="reserve-detail-body">
-                     <input
-                        type="file"
-                        onChange={(e) => setFile(e.target.files[0])}
-                        accept=".pdf"
-                     />
+                     {isReservation ? (
+                        <a
+                           className="link"
+                           href={reservation?.pdfLink || '#'}
+                           target="_blank"
+                           rel="noreferrer">
+                           <button>View Report</button>
+                        </a>
+                     ) : (
+                        <input
+                           type="file"
+                           onChange={(e) => setFile(e.target.files[0])}
+                           accept=".pdf"
+                        />
+                     )}
                   </div>
                </div>
                <div className="reserve-container">
@@ -268,8 +312,13 @@ function Reserve() {
                      <select
                         className="reserve-select"
                         name="covidTrace"
-                        value={state.covidTrace}
-                        onChange={handleState}>
+                        value={
+                           isReservation
+                              ? reservation?.covidTrace
+                              : state.covidTrace
+                        }
+                        onChange={isReservation ? undefined : handleState}
+                        disabled={isReservation}>
                         <option value="0">None</option>
                         <option value="1">
                            Travelled from a country with COVID alert
@@ -281,10 +330,33 @@ function Reserve() {
                   </div>
                </div>
             </div>
-            {!disabled && (
-               <button className="reserve-btn" onClick={reserveBed}>
-                  Reserve a bed
-               </button>
+
+            <div className="reserve-actions">
+               {!disabled && !isReservation && (
+                  <button className="reserve-btn" onClick={reserveBed}>
+                     Reserve a bed
+                  </button>
+               )}
+
+               {isReservation && reservation?.isAccepted === 0 && (
+                  <button className="accept-btn" onClick={acceptBed}>
+                     Accept
+                  </button>
+               )}
+
+               {isReservation && reservation?.isAccepted === 0 && (
+                  <button className="reject-btn" onClick={rejectBed}>
+                     Reject
+                  </button>
+               )}
+            </div>
+
+            {reservation?.isAccepted === 1 && reservation?.isActive === 0 && (
+               <h1 className="reserve-status">Awaiting user</h1>
+            )}
+
+            {reservation?.isActive === 1 && (
+               <h1 className="reserve-status">Room Allocated</h1>
             )}
 
             {state.loading && (

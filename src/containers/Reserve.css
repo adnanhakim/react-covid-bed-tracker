@@ -108,9 +108,29 @@
    align-items: center;
 }
 
+.reserve-actions {
+   display: flex;
+   gap: 1rem;
+   margin-top: 3rem;
+}
+
 .reserve-btn {
    background-color: var(--accent);
    color: var(--background);
+   font-size: 1rem;
+   width: 14rem;
+}
+
+.accept-btn {
+   background-color: var(--success);
+   color: var(--text);
+   font-size: 1rem;
+   width: 14rem;
+}
+
+.reject-btn {
+   background-color: var(--error);
+   color: var(--text);
    font-size: 1rem;
    width: 14rem;
 }
@@ -130,6 +150,13 @@
 }
 
 .reserve-custom-loader-container > p {
+   color: var(--accent);
+}
+
+.reserve-status {
+   font-size: 0.875rem !important;
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
    color: var(--accent);
 }
 

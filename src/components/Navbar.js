@@ -96,6 +96,10 @@ function Navbar() {
             {sidebar === 'OVERVIEW' && (
                <div className="navbar-breadcrumb">Overview</div>
             )}
+
+            {sidebar === 'RESERVATION' && (
+               <div className="navbar-breadcrumb">Reservation Details</div>
+            )}
          </div>
          <div className="navbar-right">
             <div className="navbar-tag">{username}</div>

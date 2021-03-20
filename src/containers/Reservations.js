@@ -4,12 +4,13 @@ import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../state/StateProvider';
 import ReservationCard from '../components/reservation/ReservationCard';
 import API from '../utils/API';
+import CustomLoader from '../components/CustomLoader';
 
 function Reservations() {
    const history = useHistory();
    const [{ status }, dispatch] = useStateValue();
 
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(true);
    const [reservations, setReservations] = useState([]);
 
    useEffect(() => {
@@ -39,7 +40,9 @@ function Reservations() {
       }
    }, [status, history]);
 
-   return (
+   return loading ? (
+      <CustomLoader text="Fetching Reservations" />
+   ) : (
       <div className="section">
          <div className="reservations">
             <h3>Reservations</h3>
