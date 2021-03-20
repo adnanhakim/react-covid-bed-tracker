@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap');
 
 * {
    margin: 0;
@@ -6,7 +6,8 @@
    --background: #171a21;
    --white: #ffffff;
    --black: #000000;
-   --text: #fff;
+   --text: #ebebeb;
+   --light-text: #c2c2c2;
    --accent: #f7c35e;
    /* --accent: #26525c; */
    --text-accent: #26525c;
@@ -23,6 +24,7 @@
    --max-width: 1300px;
    --sidebar-width: 250px;
    --container-margin: 2rem;
+   --card-border: 0.5rem;
 }
 
 body {
@@ -38,6 +40,7 @@ button {
    font-weight: 700;
    border-radius: 0.5rem;
    padding: 0.5rem 2rem;
+   background-color: var(--accent);
 }
 
 .section {
@@ -46,7 +49,7 @@ button {
 
 .link {
    text-decoration: none;
-   color: var(--text-accent);
+   color: inherit;
 }
 
 .super-dream {

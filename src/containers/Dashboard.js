@@ -5,6 +5,7 @@ import Feed from './Feed';
 import Sidebar from '../components/Sidebar';
 import Request from './Request'
 import Navbar from '../components/Navbar';
+import HospitalInfo from './HospitalInfo';
 
 function Dashboard() {
    return (
@@ -15,6 +16,7 @@ function Dashboard() {
             <section className="main">
                <Switch>
                   <Route path="/sendRequest" exact component={Request} />
+                  <Route path="/hospital/:id" exact component={HospitalInfo} />
                   <Route path="/" component={Feed} />
                   
                </Switch>

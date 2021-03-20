@@ -1,0 +1,61 @@
+.hospital-info {
+   padding: 1.5rem;
+   color: var(--text);
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+}
+
+.hospital-info-card {
+   background: var(--sidebar-background);
+   border-radius: var(--card-border);
+   padding: 1.5rem;
+}
+
+.hospital-info-card > h3 {
+   font-size: 1.6rem;
+   padding-bottom: 0.5rem;
+}
+
+.hospital-info-card > h4 {
+   font-size: 1.1rem;
+   color: var(--light-text);
+   padding-bottom: 1.5rem;
+}
+
+.hospital-info-card > p {
+   font-size: 1.1rem;
+   color: var(--text);
+   padding-bottom: 1rem;
+}
+
+.hospital-info-beds {
+   display: flex;
+   gap: 1.5rem;
+}
+
+.hospital-info-bed-card {
+   flex: 1;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 1rem;
+   background: var(--background);
+   border-radius: var(--card-border);
+   padding: 1.5rem;
+}
+
+.hospital-info-bed-card > p {
+   font-size: 0.8rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+}
+
+.hospital-info-bed-card > h3 {
+   font-size: 1.3rem;
+   font-family: 'Montserrat', 'Lato', sans-serif;
+}
+
+.hospital-info-locate-btn {
+   font-size: 1rem;
+}

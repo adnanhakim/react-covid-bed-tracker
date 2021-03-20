@@ -1,2 +1,3 @@
-export const BASE_URL = '';
-// export const API_KEY = 'AIzaSyDc5qPlJAVQcQbDYxt2nEZJ8KKQc9dayRs'
+
+export const BASE_URL =
+   'https://covid-bed-tracker-fegja.run-ap-south1.goorm.io';

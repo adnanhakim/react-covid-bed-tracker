@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link, useHistory } from 'react-router-dom';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { useStateValue } from '../state/StateProvider';
 import auth from '../auth/auth';
 
 function Navbar() {
    const history = useHistory();
-   const [{ sidebar, active }, dispatch] = useStateValue();
+   const [
+      { sidebar, query, active, selectedHospital },
+      dispatch,
+   ] = useStateValue();
 
    const [dropdown, setDropdown] = useState(false);
 
@@ -33,6 +35,13 @@ function Navbar() {
       }
    }
 
+   function handleQuery(e) {
+      dispatch({
+         type: 'SET_QUERY',
+         query: e.target.value,
+      });
+   }
+
    return (
       <header className="navbar">
          <div className="navbar-left">
@@ -41,6 +50,27 @@ function Navbar() {
                   className="navbar-hamburger"
                   onClick={handleSidebar}
                />
+            )}
+
+            {sidebar === 'HOSPITALS' && (
+               <div className="navbar-search">
+                  <SearchIcon className="navbar-search-icon" />
+                  <input
+                     type="text"
+                     value={query}
+                     onChange={handleQuery}
+                     placeholder="Search for hospitals"
+                  />
+               </div>
+            )}
+
+            {sidebar === 'HOSPITAL_INFO' && (
+               <div className="navbar-breadcrumb">
+                  <Link className="link" to="/">
+                     Hospitals
+                  </Link>{' '}
+                  &nbsp;&gt;&nbsp; {selectedHospital}
+               </div>
             )}
 
             {sidebar === 'OVERVIEW' && (
