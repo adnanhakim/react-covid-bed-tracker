@@ -2,6 +2,7 @@ export const initialState = {
    sidebar: 'HOME',
    query: '',
    selectedHospital: '',
+   selectedHospitalId: '',
 };
 
 function reducer(state, action) {
@@ -20,6 +21,11 @@ function reducer(state, action) {
          return {
             ...state,
             selectedHospital: action.selectedHospital,
+         };
+      case 'SET_SELECTED_HOSPITAL_ID':
+         return {
+            ...state,
+            selectedHospitalId: action.selectedHospitalId,
          };
       default:
          return state;

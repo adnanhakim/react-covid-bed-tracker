@@ -11,7 +11,7 @@ import auth from '../auth/auth';
 function Navbar() {
    const history = useHistory();
    const [
-      { sidebar, query, active, selectedHospital },
+      { sidebar, query, active, selectedHospital, selectedHospitalId },
       dispatch,
    ] = useStateValue();
 
@@ -70,6 +70,19 @@ function Navbar() {
                      Hospitals
                   </Link>{' '}
                   &nbsp;&gt;&nbsp; {selectedHospital}
+               </div>
+            )}
+
+            {sidebar === 'RESERVE' && (
+               <div className="navbar-breadcrumb">
+                  <Link className="link" to="/">
+                     Hospitals
+                  </Link>{' '}
+                  &nbsp;&gt;&nbsp;{' '}
+                  <Link className="link" to={`/hospital/${selectedHospitalId}`}>
+                     {selectedHospital}
+                  </Link>{' '}
+                  &nbsp;&gt;&nbsp; Reserve a bed
                </div>
             )}
 

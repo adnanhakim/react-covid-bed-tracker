@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import illustration from '../login-illustration.svg';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import firebase from '../utils/firebase';
 import API from '../utils/API';
 import auth from '../auth/auth';
@@ -11,9 +11,7 @@ function Login() {
    const location = useLocation();
    const { from } = location.state || { from: { pathname: '/' } };
 
-   const [verified, setVerified] = useState(false);
    const [mobileNumber, setMobileNumber] = useState('');
-   const [uid, setUid] = useState('');
 
    async function sendOTP() {
       if (!mobileNumber || mobileNumber.length !== 10) {
@@ -33,16 +31,16 @@ function Login() {
 
          const res = await event.confirm(code);
          console.log(res.user?.uid);
-         setUid(res.user?.uid);
-         login();
+         login(res.user?.uid);
       } catch (err) {
          console.log(err);
       }
    }
 
-   async function login() {
+   async function login(uid) {
       try {
          console.log('Saving user...');
+         console.log(uid);
 
          const res = await API.post('/user/save', {
             uid,
@@ -81,6 +79,9 @@ function Login() {
                   <button className="login-btn" onClick={sendOTP}>
                      Verify and Login
                   </button>
+                  <Link className="link admin-login-btn" to="/admin/login">
+                     Admin Login
+                  </Link>
                </div>
             </div>
          </div>

@@ -1,0 +1,74 @@
+.admin-login-container {
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.admin-login-card {
+   display: flex;
+   width: 300px;
+   flex-direction: column;
+   align-items: center;
+   font-size: 0.8125rem;
+}
+
+.admin-login-card > h3 {
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+   font-size: 1.2rem;
+   margin-bottom: 1.5rem;
+   color: var(--accent);
+}
+
+.admin-login-card input {
+   background-color: var(--sidebar-background);
+   color: var(--text);
+   width: calc(300px - 2rem);
+   padding: 0.5rem 1rem;
+   font-size: 1rem;
+   outline: none;
+   border: none;
+   border-radius: var(--card-border);
+   margin-bottom: 1rem;
+}
+
+.admin-login-links {
+   width: 100%;
+}
+
+.admin-login-card button {
+   width: 100%;
+   font-size: 0.875rem;
+   background-color: var(--accent);
+   outline: none;
+   border-radius: var(--card-border);
+   padding: 0.5rem 1rem;
+   box-shadow: 0px 0px 0px transparent;
+   border: 0px solid transparent;
+   text-shadow: 0px 0px 0px transparent;
+}
+
+.admin-login-button {
+   margin-top: 1rem;
+   background-color: var(--dark-blue);
+   color: var(--background);
+   font-size: 0.8rem !important;
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+}
+
+.login-divider {
+   width: 100%;
+   height: 1px;
+   background: var(--divider-color);
+   margin: 1.5rem 0rem 1rem 0rem;
+}
+
+.normal-login-button {
+   color: var(--accent);
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+   font-size: 0.8rem !important;
+   background-color: inherit !important;
+}
