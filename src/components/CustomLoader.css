@@ -1,0 +1,15 @@
+.custom-loader-container {
+   width: 100%;
+   height: calc(100vh - var(--navbar-height));
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.custom-loader-container > p {
+   margin-top: 0.5rem;
+   font-size: 1rem;
+   font-weight: 700;
+   color: var(--accent);
+}

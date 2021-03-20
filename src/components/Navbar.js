@@ -11,7 +11,7 @@ import auth from '../auth/auth';
 
 function Navbar() {
    const history = useHistory();
-   const [{ sidebar, active }, dispatch] = useStateValue();
+   const [{ sidebar, query, active }, dispatch] = useStateValue();
 
    const [dropdown, setDropdown] = useState(false);
 
@@ -33,6 +33,13 @@ function Navbar() {
       }
    }
 
+   function handleQuery(e) {
+      dispatch({
+         type: 'SET_QUERY',
+         query: e.target.value,
+      });
+   }
+
    return (
       <header className="navbar">
          <div className="navbar-left">
@@ -41,6 +48,18 @@ function Navbar() {
                   className="navbar-hamburger"
                   onClick={handleSidebar}
                />
+            )}
+
+            {sidebar === 'HOSPITALS' && (
+               <div className="navbar-search">
+                  <SearchIcon className="navbar-search-icon" />
+                  <input
+                     type="text"
+                     value={query}
+                     onChange={handleQuery}
+                     placeholder="Search for hospitals"
+                  />
+               </div>
             )}
 
             {sidebar === 'OVERVIEW' && (

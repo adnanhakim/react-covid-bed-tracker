@@ -1,5 +1,6 @@
 export const initialState = {
    sidebar: 'HOME',
+   query: '',
 };
 
 function reducer(state, action) {
@@ -8,6 +9,11 @@ function reducer(state, action) {
          return {
             ...state,
             sidebar: action.sidebar,
+         };
+      case 'SET_QUERY':
+         return {
+            ...state,
+            query: action.query,
          };
       default:
          return state;

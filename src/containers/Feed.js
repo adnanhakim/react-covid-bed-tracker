@@ -1,36 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import HospitalCard from '../components/feed/HospitalCard';
+import CustomLoader from '../components/CustomLoader';
 import './Feed.css';
 import { useStateValue } from '../state/StateProvider';
+import API from '../utils/API';
 
 function Feed() {
-   const [, dispatch] = useStateValue();
+   const [{ query }, dispatch] = useStateValue();
+
+   const [hospitals, setHospitals] = useState([]);
+   const [loading, setLoading] = useState(true);
 
    useEffect(() => {
-      // async function fetchJobs() {
-      //    try {
-      //       const res = await axios({
-      //          method: 'GET',
-      //          url: applied
-      //             ? `${BASE_URL}/company/applied`
-      //             : `${BASE_URL}/company/`,
-      //          headers: {
-      //             'auth-token': auth.getToken(),
-      //          },
-      //       });
+      async function fetchHospitals() {
+         try {
+            const res = await API.get('/hospital/getAll');
+            setLoading(false);
+            setHospitals(res.data?.data);
+         } catch (err) {
+            setLoading(false);
+            console.log(err);
+         }
+      }
 
-      //       setLoading(false);
-      //       dispatch({
-      //          type: 'SET_JOBS',
-      //          jobs: res.data,
-      //       });
-      //    } catch (err) {
-      //       setLoading(false);
-      //       console.log(err);
-      //    }
-      // }
-
-      // fetchJobs();
+      fetchHospitals();
 
       dispatch({
          type: 'SET_SIDEBAR',
@@ -38,14 +31,24 @@ function Feed() {
       });
    }, [dispatch]);
 
-   return (
+   return loading ? (
+      <CustomLoader text="Fetching Hospitals" />
+   ) : (
       <div className="section">
          <div className="feed-hospitals">
-            <HospitalCard />
-            <HospitalCard />
-            <HospitalCard />
-            <HospitalCard />
-            <HospitalCard />
+            {hospitals
+               .filter((hospital) =>
+                  hospital.name.toLowerCase().includes(query.toLowerCase())
+               )
+               .map((hospital) => (
+                  <HospitalCard
+                     id={hospital._id}
+                     name={hospital.name}
+                     city={hospital.city}
+                     freeBeds={hospital.freeBeds}
+                     totalBeds={hospital.totalBeds}
+                  />
+               ))}
          </div>
       </div>
    );

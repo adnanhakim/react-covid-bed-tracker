@@ -2,17 +2,17 @@ import React from 'react';
 import './HospitalCard.css';
 import { Link } from 'react-router-dom';
 
-function HospitalCard() {
+function HospitalCard({ id, name, city, freeBeds, totalBeds }) {
    return (
-      <Link to={`/application/`} className="link">
+      <Link to={`/hospital/${id}`} className="link">
          <div className="hospital-card-container">
             <div className="hospital-card">
                <div className="hospital-card-left">
-                  <h3>Kasturba</h3>
-                  <p>Mumbai</p>
+                  <h3>{name}</h3>
+                  <p>{city}</p>
                </div>
                <div className="hospital-card-right">
-                  <h3>12/20 </h3>
+                  <h3>{`${freeBeds}/${totalBeds}`} </h3>
                   <p>beds available</p>
                </div>
             </div>
