@@ -1,12 +1,14 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react';
 import './Reserve.css';
 import API from '../utils/API';
 import { useParams } from 'react-router';
 import Loader from 'react-loader-spinner';
 import firebase from '../utils/firebase';
-import "firebase/storage";
-const storage = firebase.storage()
+import 'firebase/storage';
 import { useStateValue } from '../state/StateProvider';
+
+const storage = firebase.storage();
 
 function Reserve() {
    const { id } = useParams();
@@ -23,9 +25,10 @@ function Reserve() {
       message: '',
    });
    const [file, setFile] = useState('');
+   const [hospital, setHospital] = useState({});
+   const [disabled, setDisabled] = useState(false);
 
    useEffect(() => {
-      
       async function fetchHospitalInfo() {
          try {
             setState((prevState) => ({
@@ -34,6 +37,15 @@ function Reserve() {
                message: 'Refreshing data',
             }));
             const res = await API.get(`/hospital/${id}`);
+
+            setHospital(res.data?.data);
+            if (state.type == 0 && hospital?.freenormalbeds <= 0) {
+               setDisabled(true);
+            } else if (state.type == 1 && hospital?.freeicuwithoutbeds <= 0) {
+               setDisabled(true);
+            } else if (state.type == 2 && hospital?.freeicubeds <= 0) {
+               setDisabled(true);
+            } else setDisabled(false);
 
             setState((prevState) => ({ ...prevState, loading: false }));
             dispatch({
@@ -60,104 +72,118 @@ function Reserve() {
       });
    }, [id, dispatch]);
 
-  
+   useEffect(() => {
+      if (state.type == 0 && hospital?.freenormalbeds <= 0) {
+         setDisabled(true);
+      } else if (state.type == 1 && hospital?.freeicuwithoutbeds <= 0) {
+         setDisabled(true);
+      } else if (state.type == 2 && hospital?.freeicubeds <= 0) {
+         setDisabled(true);
+      } else setDisabled(false);
+   }, [
+      state.type,
+      hospital?.freenormalbeds,
+      hospital?.freeicuwithoutbeds,
+      hospital?.freeicubeds,
+   ]);
 
    function handleState(e) {
       setState({ ...state, [e.target.name]: e.target.value });
    }
 
    async function handleImage(pdf) {
-
-         const uploadTask = storage.ref(`pdf/${pdf.name}`).put(pdf);
+      const uploadTask = storage.ref(`pdf/${pdf.name}`).put(pdf);
       uploadTask.on(
-         "state_changed",
-         snapshot => {
-         // progress function ...
-         
+         'state_changed',
+         (snapshot) => {
+            // progress function ...
          },
-         error => {
-         // Error function ...
-         console.log(error);
-         return (error)
+         (error) => {
+            // Error function ...
+            console.log(error);
+            return error;
          },
          () => {
-         // complete function ...
-         storage
-            .ref("pdf")
-            .child(pdf.name)
-            .getDownloadURL()
-            .then(url => {
-               console.log(url)
-               try{
-                  let data = {
-                     name:state.name,
-                     age: state.age,
-                     aadharCard: state.aadhaar,
-                     type: state.type,
-                     covidTrace: state.covidTrace,
-                     pdfLink: url,
-                     hospitalId: id
+            // complete function ...
+            storage
+               .ref('pdf')
+               .child(pdf.name)
+               .getDownloadURL()
+               .then((url) => {
+                  console.log(url);
+                  try {
+                     let data = {
+                        name: state.name,
+                        age: state.age,
+                        aadharCard: state.aadhaar,
+                        type: state.type,
+                        covidTrace: state.covidTrace,
+                        pdfLink: url,
+                        hospitalId: id,
+                     };
+                     API.post('/booking/reserve', data, {}).then((res) => {
+                        setState((prevState) => ({
+                           ...prevState,
+                           loading: false,
+                        }));
+                        console.log(res.data);
+                     });
+                  } catch (err) {
+                     setState((prevState) => ({
+                        ...prevState,
+                        loading: false,
+                     }));
                   }
-                  API.post('/booking/reserve', data, {
-            
-                  }).then((res)=>{
-                     setState((prevState) => ({ ...prevState, loading: false }));
-                     console.log(res.data);
-                  });
-         
-                  
-               } catch (err) {
-                  setState((prevState) => ({ ...prevState, loading: false }));
-               }
-            });
-         })
+               });
+         }
+      );
    }
 
    async function reserveBed() {
       // try {
-         if (!state.name || !state.age || !state.aadhaar) {
-            alert('Enter all fields');
-            return;
-         }
+      if (!state.name || !state.age || !state.aadhaar) {
+         alert('Enter all fields');
+         return;
+      }
 
-         if (state.age < 0 || state.age > 150) {
-            alert('Not a valid age');
-            return;
-         }
+      if (state.age < 0 || state.age > 150) {
+         alert('Not a valid age');
+         return;
+      }
 
-         if (!state.aadhaar.match(aadhaarRegex)) {
-            alert('Not a valid aadhaar card');
-            return;
-         }
+      if (!state.aadhaar.match(aadhaarRegex)) {
+         alert('Not a valid aadhaar card');
+         return;
+      }
 
-         setState((prevState) => ({
-            ...prevState,
-            loading: true,
-            message: 'Reserving a bed',
-         }));
+      setState((prevState) => ({
+         ...prevState,
+         loading: true,
+         message: 'Reserving a bed',
+      }));
 
-         // let formData = new FormData();
-       handleImage(file);
-         
-         // console.log(state.aadhaar)
-         // let data = {
-         //    name:state.name,
-         //    age: state.age,
-         //    aadharCard: state.aadhaar,
-         //    type: state.type,
-         //    covidTrace: state.covidTrace,
-         //    pdfLink: pdfLink,
-         //    hospitalId: id
-         // }
-         // formData.append('name', state.name);
-         // formData.append('age', state.age);
-         // formData.append('aadhaarCard', state.aadhaar);
-         // formData.append('type', state.type);
-         // formData.append('covidTrace', state.covidTrace);
-         // const pdfLink = await handleImage(file)
-         // formData.append('pdfLink', pdfLink);
+      // let formData = new FormData();
+      handleImage(file);
+
+      // console.log(state.aadhaar)
+      // let data = {
+      //    name:state.name,
+      //    age: state.age,
+      //    aadharCard: state.aadhaar,
+      //    type: state.type,
+      //    covidTrace: state.covidTrace,
+      //    pdfLink: pdfLink,
+      //    hospitalId: id
+      // }
+      // formData.append('name', state.name);
+      // formData.append('age', state.age);
+      // formData.append('aadhaarCard', state.aadhaar);
+      // formData.append('type', state.type);
+      // formData.append('covidTrace', state.covidTrace);
+      // const pdfLink = await handleImage(file)
+      // formData.append('pdfLink', pdfLink);
       //    const res = await API.post('/booking/reserve', data, {
-            
+
       //    });
 
       //    setState((prevState) => ({ ...prevState, loading: false }));
@@ -255,9 +281,11 @@ function Reserve() {
                   </div>
                </div>
             </div>
-            <button className="reserve-btn" onClick={reserveBed}>
-               Reserve a bed
-            </button>
+            {!disabled && (
+               <button className="reserve-btn" onClick={reserveBed}>
+                  Reserve a bed
+               </button>
+            )}
 
             {state.loading && (
                <div className="reserve-custom-loader-container">

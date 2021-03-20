@@ -35,7 +35,8 @@ function Sidebar() {
             active={sidebar === 'APPLIED'}
             mobileView
          />
-         <h3>Admin</h3>
+
+         {status === 1 && <h3>Admin</h3>}
          {status === 1 && (
             <SidebarOption
                Icon={HotelIcon}

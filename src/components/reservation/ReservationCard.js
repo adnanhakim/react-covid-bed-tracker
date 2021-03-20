@@ -2,7 +2,7 @@ import React from 'react';
 import './ReservationCard.css';
 import { Link } from 'react-router-dom';
 
-function ReservationCard({ id }) {
+function ReservationCard({ id, name, trace, age }) {
    function getPatientTrace(trace) {
       if (!trace) {
          return '';
@@ -22,11 +22,11 @@ function ReservationCard({ id }) {
          <div className="reservation-card-container">
             <div className="reservation-card">
                <div className="reservation-card-left">
-                  <h3>John Doe</h3>
-                  <p>{getPatientTrace(1)}</p>
+                  <h3>{name}</h3>
+                  <p>{getPatientTrace(trace)}</p>
                </div>
                <div className="reservation-card-right">
-                  <h3>30 </h3>
+                  <h3>{age} </h3>
                   <p>years old</p>
                </div>
             </div>

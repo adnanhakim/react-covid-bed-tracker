@@ -9,7 +9,7 @@ import { useStateValue } from '../state/StateProvider';
 function HospitalInfo() {
    const history = useHistory();
    const { id } = useParams();
-   const [, dispatch] = useStateValue();
+   const [{ status }, dispatch] = useStateValue();
 
    const [loading, setLoading] = useState(true);
    const [hospital, setHospital] = useState({});
@@ -82,11 +82,13 @@ function HospitalInfo() {
                         Locate on Google Maps
                      </a>
                   </button>
-                  <button className="hospital-info-btn">
-                     <Link to={`/hospital/${id}/reserve`} className="link">
-                        Reserve a bed
-                     </Link>
-                  </button>
+                  {status === 0 && (
+                     <button className="hospital-info-btn">
+                        <Link to={`/hospital/${id}/reserve`} className="link">
+                           Reserve a bed
+                        </Link>
+                     </button>
+                  )}
                </div>
             </div>
          </div>

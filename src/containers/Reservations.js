@@ -3,26 +3,29 @@ import './Reservations.css';
 import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../state/StateProvider';
 import ReservationCard from '../components/reservation/ReservationCard';
+import API from '../utils/API';
 
 function Reservations() {
    const history = useHistory();
    const [{ status }, dispatch] = useStateValue();
 
    const [loading, setLoading] = useState(false);
+   const [reservations, setReservations] = useState([]);
 
    useEffect(() => {
-      // async function fetchHospitals() {
-      //    try {
-      //       const res = await API.get('/hospital/all');
-      //       setLoading(false);
-      //       setHospitals(res.data?.data);
-      //    } catch (err) {
-      //       setLoading(false);
-      //       console.log(err);
-      //    }
-      // }
+      async function fetchReservations() {
+         try {
+            const res = await API.get('/booking/all');
+            setLoading(false);
+            console.log(res.data?.data);
+            setReservations(res.data?.data);
+         } catch (err) {
+            setLoading(false);
+            console.log(err);
+         }
+      }
 
-      // fetchHospitals();
+      fetchReservations();
 
       dispatch({
          type: 'SET_SIDEBAR',
@@ -41,11 +44,15 @@ function Reservations() {
          <div className="reservations">
             <h3>Reservations</h3>
             <div className="reservation-list">
-               <ReservationCard />
-               <ReservationCard />
-               <ReservationCard />
-               <ReservationCard />
-               <ReservationCard />
+               {reservations.map((reservation) => (
+                  <ReservationCard
+                     key={reservation._id}
+                     id={reservation._id}
+                     name={reservation.name}
+                     trace={reservation.covidTrace}
+                     age={reservation.age}
+                  />
+               ))}
             </div>
          </div>
       </div>
