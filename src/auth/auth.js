@@ -1,6 +1,6 @@
 class Auth {
    constructor() {
-      this.token = localStorage.getItem('ENHANCE_TOKEN');
+      this.token = localStorage.getItem('COVID_TOKEN');
    }
 
    login(token, done) {
