@@ -40,6 +40,7 @@ button {
    font-weight: 700;
    border-radius: 0.5rem;
    padding: 0.5rem 2rem;
+   background-color: var(--accent);
 }
 
 .section {
@@ -48,7 +49,7 @@ button {
 
 .link {
    text-decoration: none;
-   color: var(--text-accent);
+   color: inherit;
 }
 
 .super-dream {

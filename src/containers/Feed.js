@@ -42,6 +42,7 @@ function Feed() {
                )
                .map((hospital) => (
                   <HospitalCard
+                     key={hospital._id}
                      id={hospital._id}
                      name={hospital.name}
                      city={hospital.city}

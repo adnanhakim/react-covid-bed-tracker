@@ -19,6 +19,7 @@
 }
 
 .navbar-breadcrumb {
+   color: var(--light-text);
    margin-left: 2rem;
    flex: 1;
 }

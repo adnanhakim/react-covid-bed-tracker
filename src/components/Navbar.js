@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link, useHistory } from 'react-router-dom';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { useStateValue } from '../state/StateProvider';
 import auth from '../auth/auth';
 
 function Navbar() {
    const history = useHistory();
-   const [{ sidebar, query, active }, dispatch] = useStateValue();
+   const [
+      { sidebar, query, active, selectedHospital },
+      dispatch,
+   ] = useStateValue();
 
    const [dropdown, setDropdown] = useState(false);
 
@@ -59,6 +61,15 @@ function Navbar() {
                      onChange={handleQuery}
                      placeholder="Search for hospitals"
                   />
+               </div>
+            )}
+
+            {sidebar === 'HOSPITAL_INFO' && (
+               <div className="navbar-breadcrumb">
+                  <Link className="link" to="/">
+                     Hospitals
+                  </Link>{' '}
+                  &nbsp;&gt;&nbsp; {selectedHospital}
                </div>
             )}
 
