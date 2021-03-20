@@ -3,6 +3,9 @@ import './Reserve.css';
 import API from '../utils/API';
 import { useParams } from 'react-router';
 import Loader from 'react-loader-spinner';
+import firebase from '../utils/firebase';
+import "firebase/storage";
+const storage = firebase.storage()
 
 function Reserve() {
    const { id } = useParams();
@@ -19,6 +22,7 @@ function Reserve() {
    const [file, setFile] = useState('');
 
    useEffect(() => {
+      
       async function fetchHospitalInfo() {
          try {
             const res = await API.get(`/hospital/${id}`);
@@ -31,12 +35,61 @@ function Reserve() {
       fetchHospitalInfo();
    }, [id]);
 
+  
+
    function handleState(e) {
       setState({ ...state, [e.target.name]: e.target.value });
    }
 
+   async function handleImage(pdf) {
+
+         const uploadTask = storage.ref(`pdf/${pdf.name}`).put(pdf);
+      uploadTask.on(
+         "state_changed",
+         snapshot => {
+         // progress function ...
+         
+         },
+         error => {
+         // Error function ...
+         console.log(error);
+         return (error)
+         },
+         () => {
+         // complete function ...
+         storage
+            .ref("pdf")
+            .child(pdf.name)
+            .getDownloadURL()
+            .then(url => {
+               console.log(url)
+               try{
+                  let data = {
+                     name:state.name,
+                     age: state.age,
+                     aadharCard: state.aadhaar,
+                     type: state.type,
+                     covidTrace: state.covidTrace,
+                     pdfLink: url,
+                     hospitalId: id
+                  }
+                  API.post('/booking/reserve', data, {
+            
+                  }).then((res)=>{
+                     setState((prevState) => ({ ...prevState, loading: false }));
+                     console.log(res.data);
+                  });
+         
+                  
+               } catch (err) {
+                  setState((prevState) => ({ ...prevState, loading: false }));
+               }
+            });
+         })
+   }
+
    async function reserveBed() {
-      try {
+      // try {
          if (!state.name || !state.age || !state.aadhaar) {
             alert('Enter all fields');
             return;
@@ -54,26 +107,36 @@ function Reserve() {
 
          setState((prevState) => ({ ...prevState, loading: true }));
 
-         let formData = new FormData();
-         formData.append('name', state.name);
-         formData.append('age', state.age);
-         formData.append('aadhaarCard', state.aadhaar);
-         formData.append('type', state.type);
-         formData.append('covidTrace', state.covidTrace);
-         formData.append('pdf', file);
+         // let formData = new FormData();
+       handleImage(file);
+         
+         // console.log(state.aadhaar)
+         // let data = {
+         //    name:state.name,
+         //    age: state.age,
+         //    aadharCard: state.aadhaar,
+         //    type: state.type,
+         //    covidTrace: state.covidTrace,
+         //    pdfLink: pdfLink,
+         //    hospitalId: id
+         // }
+         // formData.append('name', state.name);
+         // formData.append('age', state.age);
+         // formData.append('aadhaarCard', state.aadhaar);
+         // formData.append('type', state.type);
+         // formData.append('covidTrace', state.covidTrace);
+         // const pdfLink = await handleImage(file)
+         // formData.append('pdfLink', pdfLink);
+      //    const res = await API.post('/booking/reserve', data, {
+            
+      //    });
 
-         const res = await API.post('/booking/reserve', formData, {
-            headers: {
-               'Content-Type': 'multipart/form-data',
-            },
-         });
-
-         setState((prevState) => ({ ...prevState, loading: false }));
-         console.log(res.data);
-      } catch (err) {
-         setState((prevState) => ({ ...prevState, loading: false }));
-         console.log(err);
-      }
+      //    setState((prevState) => ({ ...prevState, loading: false }));
+      //    console.log(res.data);
+      // } catch (err) {
+      //    setState((prevState) => ({ ...prevState, loading: false }));
+      //    console.log(err);
+      // }
    }
 
    return (
