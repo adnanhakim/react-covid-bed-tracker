@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import './AdminLogin.css';
-import { Link } from 'react-router-dom';
+import auth from '../auth/auth';
+import API from '../utils/API';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { useStateValue } from '../state/StateProvider';
 
 function AdminLogin() {
+   const history = useHistory();
+   const location = useLocation();
+   const { from } = location.state || { from: { pathname: '/' } };
+
+   const [{ reload }, dispatch] = useStateValue();
    const [state, setState] = useState({
       username: '',
       password: '',
@@ -15,41 +23,36 @@ function AdminLogin() {
 
    async function login() {
       try {
-         //    if (!state.username) {
-         //       setMessage({ message: 'Enter a username', error: true });
-         //       return;
-         //    }
-         //    if (!state.password) {
-         //       setMessage({
-         //          message: 'Enter a password',
-         //          error: true,
-         //       });
-         //       return;
-         //    }
-         //    clearMessage();
-         //    setState((prevState) => ({ ...prevState, loading: true }));
-         //    const res = await API.post(
-         //       '/user/login',
-         //       {
-         //          username: state.username,
-         //          password: state.password,
-         //       },
-         //       { withCredentials: true }
-         //    );
-         //    setState((prevState) => ({ ...prevState, loading: false }));
-         //    if (res.data) {
-         //       auth.login(res.data, () => history.replace(from));
-         //    }
+         if (!state.username || !state.password) {
+            alert('Enter all fields');
+            return;
+         }
+
+         setState((prevState) => ({ ...prevState, loading: true }));
+         const res = await API.post(
+            '/user/login',
+            {
+               username: state.username,
+               password: state.password,
+            },
+            { withCredentials: true }
+         );
+         dispatch({
+            type: 'SET_RELOAD',
+            reload: !reload,
+         });
+         setState((prevState) => ({ ...prevState, loading: false }));
+
+         auth.login(res.data, () => history.replace(from));
       } catch (err) {
-         // setState((prevState) => ({ ...prevState, loading: false }));
-         // logger('login', err);
-         // if (err.response) {
-         //    setMessage({ message: err.response.data, error: true });
-         // }
+         setState((prevState) => ({ ...prevState, loading: false }));
+         console.log(err);
       }
    }
 
-   return (
+   return auth.isAuthenticated() ? (
+      <Redirect to={from} />
+   ) : (
       <div className="admin-login-container">
          <div className="admin-login-card">
             <h3>Covid Tracker Admin</h3>

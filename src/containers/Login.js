@@ -5,12 +5,14 @@ import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import firebase from '../utils/firebase';
 import API from '../utils/API';
 import auth from '../auth/auth';
+import { useStateValue } from '../state/StateProvider';
 
 function Login() {
    const history = useHistory();
    const location = useLocation();
    const { from } = location.state || { from: { pathname: '/' } };
 
+   const [{ reload }, dispatch] = useStateValue();
    const [mobileNumber, setMobileNumber] = useState('');
 
    async function sendOTP() {
@@ -47,6 +49,11 @@ function Login() {
             mobileNumber: '+91' + mobileNumber,
          });
          console.log(res.data);
+         dispatch({
+            type: 'SET_RELOAD',
+            reload: !reload,
+         });
+
          auth.login(res.data?.userToken, () => history.replace(from));
       } catch (err) {
          console.log(err);

@@ -1,11 +1,40 @@
+import React, { useEffect } from 'react';
 import './App.css';
 import Dashboard from './containers/Dashboard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './containers/Login';
 import ProtectedRoute from './auth/ProtectedRoute';
 import AdminLogin from './containers/AdminLogin';
+import { useStateValue } from './state/StateProvider';
+import API from './utils/API';
 
 function App() {
+   const [{ reload }, dispatch] = useStateValue();
+
+   useEffect(() => {
+      async function fetchUser() {
+         try {
+            const res = await API.get('/user');
+            console.log(res.data);
+
+            dispatch({
+               type: 'SET_USERNAME',
+               username: res.data?.username,
+            });
+
+            dispatch({
+               type: 'SET_STATUS',
+               status: res.data?.type,
+            });
+         } catch (err) {
+            console.log(err);
+         }
+      }
+
+      fetchUser();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [dispatch, reload]);
+
    return (
       <Router>
          <div className="App">

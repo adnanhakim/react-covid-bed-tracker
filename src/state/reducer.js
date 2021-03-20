@@ -3,6 +3,9 @@ export const initialState = {
    query: '',
    selectedHospital: '',
    selectedHospitalId: '',
+   username: '',
+   status: '',
+   reload: false,
 };
 
 function reducer(state, action) {
@@ -26,6 +29,21 @@ function reducer(state, action) {
          return {
             ...state,
             selectedHospitalId: action.selectedHospitalId,
+         };
+      case 'SET_USERNAME':
+         return {
+            ...state,
+            username: action.username,
+         };
+      case 'SET_STATUS':
+         return {
+            ...state,
+            status: action.status,
+         };
+      case 'SET_RELOAD':
+         return {
+            ...state,
+            reload: action.reload,
          };
       default:
          return state;

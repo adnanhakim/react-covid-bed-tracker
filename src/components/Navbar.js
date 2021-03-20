@@ -11,7 +11,14 @@ import auth from '../auth/auth';
 function Navbar() {
    const history = useHistory();
    const [
-      { sidebar, query, active, selectedHospital, selectedHospitalId },
+      {
+         sidebar,
+         query,
+         active,
+         selectedHospital,
+         selectedHospitalId,
+         username,
+      },
       dispatch,
    ] = useStateValue();
 
@@ -89,15 +96,9 @@ function Navbar() {
             {sidebar === 'OVERVIEW' && (
                <div className="navbar-breadcrumb">Overview</div>
             )}
-            {sidebar === 'PROFILE' && (
-               <div className="navbar-breadcrumb">Profile</div>
-            )}
-            {sidebar === 'CREATE' && (
-               <div className="navbar-breadcrumb">Add a New Job</div>
-            )}
          </div>
          <div className="navbar-right">
-            <div className="navbar-tag">Admin</div>
+            <div className="navbar-tag">{username}</div>
 
             <div className="navbar-dropdown-container">
                {dropdown === false ? (
