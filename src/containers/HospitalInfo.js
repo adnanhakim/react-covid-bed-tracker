@@ -57,15 +57,15 @@ function HospitalInfo() {
                <div className="hospital-info-beds">
                   <div className="hospital-info-bed-card">
                      <p>Normal Beds</p>
-                     <h3>12</h3>
+                     <h3>{`${hospital.freenormalbeds}/${hospital.totalnormalbeds}`}</h3>
                   </div>
                   <div className="hospital-info-bed-card">
                      <p>ICU Beds without ventilators</p>
-                     <h3>12</h3>
+                     <h3>{`${hospital.freeicuwithoutbeds}/${hospital.totalicuwithoutbeds}`}</h3>
                   </div>
                   <div className="hospital-info-bed-card">
                      <p>ICU Beds with ventilators</p>
-                     <h3>12</h3>
+                     <h3>{`${hospital.freeicubeds}/${hospital.totalicubeds}`}</h3>
                   </div>
                </div>
             </div>

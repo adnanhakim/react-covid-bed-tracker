@@ -71,5 +71,24 @@
 }
 
 .login-btn {
-   font-size: 1rem;
+   font-size: 0.8rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+}
+
+.admin-login-btn {
+   font-size: 0.8rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+   color: var(--accent);
+   margin-top: 1.5rem;
+   align-self: center;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   margin: 0;
 }

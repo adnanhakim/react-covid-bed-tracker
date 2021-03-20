@@ -16,7 +16,7 @@
 .hospital-card-left {
    display: flex;
    flex-direction: column;
-   gap: 0.2rem;
+   gap: 0.4rem;
 }
 
 .hospital-card-left > h3 {
@@ -32,7 +32,7 @@
    display: flex;
    flex-direction: column;
    align-items: flex-end;
-   gap: 0.2rem;
+   gap: 0.4rem;
 }
 
 .hospital-card-right > h3 {

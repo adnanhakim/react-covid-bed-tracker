@@ -6,9 +6,11 @@ import Loader from 'react-loader-spinner';
 import firebase from '../utils/firebase';
 import "firebase/storage";
 const storage = firebase.storage()
+import { useStateValue } from '../state/StateProvider';
 
 function Reserve() {
    const { id } = useParams();
+   const [, dispatch] = useStateValue();
 
    const aadhaarRegex = '^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$';
    const [state, setState] = useState({
@@ -17,7 +19,8 @@ function Reserve() {
       aadhaar: '',
       type: 0,
       covidTrace: 0,
-      loading: false,
+      loading: true,
+      message: '',
    });
    const [file, setFile] = useState('');
 
@@ -25,15 +28,37 @@ function Reserve() {
       
       async function fetchHospitalInfo() {
          try {
+            setState((prevState) => ({
+               ...prevState,
+               loading: true,
+               message: 'Refreshing data',
+            }));
             const res = await API.get(`/hospital/${id}`);
+
+            setState((prevState) => ({ ...prevState, loading: false }));
+            dispatch({
+               type: 'SET_SELECTED_HOSPITAL',
+               selectedHospital: res.data?.data?.name,
+            });
+
+            dispatch({
+               type: 'SET_SELECTED_HOSPITAL_ID',
+               selectedHospitalId: res.data?.data?._id,
+            });
             // setHospital(res.data?.data);
          } catch (err) {
+            setState((prevState) => ({ ...prevState, loading: false }));
             console.log(err);
          }
       }
 
       fetchHospitalInfo();
-   }, [id]);
+
+      dispatch({
+         type: 'SET_SIDEBAR',
+         sidebar: 'RESERVE',
+      });
+   }, [id, dispatch]);
 
   
 
@@ -105,7 +130,11 @@ function Reserve() {
             return;
          }
 
-         setState((prevState) => ({ ...prevState, loading: true }));
+         setState((prevState) => ({
+            ...prevState,
+            loading: true,
+            message: 'Reserving a bed',
+         }));
 
          // let formData = new FormData();
        handleImage(file);
@@ -233,7 +262,7 @@ function Reserve() {
             {state.loading && (
                <div className="reserve-custom-loader-container">
                   <Loader type="Puff" color="#f7c35e" height={48} width={48} />
-                  <p>Reserving a bed</p>
+                  <p>{state.message}</p>
                </div>
             )}
          </div>
