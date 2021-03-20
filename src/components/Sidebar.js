@@ -4,12 +4,11 @@ import SidebarOption from './SidebarOption';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import SendIcon from '@material-ui/icons/Send';
+import HotelIcon from '@material-ui/icons/Hotel';
 import { useStateValue } from '../state/StateProvider';
 
 function Sidebar() {
-   const [{ user, sidebar, active }] = useStateValue();
+   const [{ status, sidebar, active }] = useStateValue();
 
    return (
       <div className={`sidebar ${active && 'sidebar--active'}`}>
@@ -36,21 +35,13 @@ function Sidebar() {
             active={sidebar === 'APPLIED'}
             mobileView
          />
-         {user?.status >= 1 && (
+         <h3>Admin</h3>
+         {status === 1 && (
             <SidebarOption
-               Icon={AddCircleIcon}
-               title={'Add Job'}
-               link={'/application/add'}
-               active={sidebar === 'CREATE'}
-               mobileView
-            />
-         )}
-         {user?.status >= 1 && (
-            <SidebarOption
-               Icon={SendIcon}
-               title={'Notification'}
-               link={'/application/notification'}
-               active={sidebar === 'NOTIFICATION'}
+               Icon={HotelIcon}
+               title={'Reservations'}
+               link={'/reservations'}
+               active={sidebar === 'RESERVATIONS'}
                mobileView
             />
          )}

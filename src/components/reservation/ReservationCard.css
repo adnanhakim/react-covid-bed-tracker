@@ -1,0 +1,47 @@
+.reservation-card-container {
+   color: var(--text);
+   background-color: var(--sidebar-background);
+   border-radius: var(--card-border);
+   width: 100%;
+}
+
+.reservation-card {
+   padding: 1rem 1.5rem;
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.reservation-card-left {
+   display: flex;
+   flex-direction: column;
+   gap: 0.4rem;
+}
+
+.reservation-card-left > h3 {
+   font-size: 1.2rem;
+}
+
+.reservation-card-left > p {
+   font-size: 0.875rem;
+   color: var(--light-text);
+}
+
+.reservation-card-right {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 0.4rem;
+}
+
+.reservation-card-right > h3 {
+   font-size: 1.3rem;
+   font-weight: 700;
+   font-family: 'Montserrat', 'Lato', sans-serif;
+}
+
+.reservation-card-right > p {
+   font-size: 0.875rem;
+   color: var(--light-text);
+}
