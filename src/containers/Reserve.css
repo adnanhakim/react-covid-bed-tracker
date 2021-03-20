@@ -5,6 +5,7 @@
 }
 
 .reserve-form {
+   position: relative;
    background: var(--sidebar-background);
    padding: 2rem 2.5rem;
    border-radius: 1rem;
@@ -112,6 +113,24 @@
    color: var(--background);
    font-size: 1rem;
    width: 14rem;
+}
+
+.reserve-custom-loader-container {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   border-radius: 1rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   background-color: rgba(247, 247, 247, 0.3);
+}
+
+.reserve-custom-loader-container > p {
+   color: var(--accent);
 }
 
 @media screen and (max-width: 1024px) {

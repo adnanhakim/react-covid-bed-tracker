@@ -5,7 +5,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import PersonIcon from '@material-ui/icons/Person';
 import SendIcon from '@material-ui/icons/Send';
 import { useStateValue } from '../state/StateProvider';
 
@@ -32,16 +31,9 @@ function Sidebar() {
          />
          <SidebarOption
             Icon={NotificationsActiveIcon}
-            title={'My Applications'}
+            title={'My Reservations'}
             link={'/applied'}
             active={sidebar === 'APPLIED'}
-            mobileView
-         />
-         <SidebarOption
-            Icon={PersonIcon}
-            title={'Profile'}
-            link={'/profile'}
-            active={sidebar === 'PROFILE'}
             mobileView
          />
          {user?.status >= 1 && (

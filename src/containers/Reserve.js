@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './Reserve.css';
+import API from '../utils/API';
+import { useParams } from 'react-router';
+import Loader from 'react-loader-spinner';
 
 function Reserve() {
+   const { id } = useParams();
+
    const aadhaarRegex = '^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$';
    const [state, setState] = useState({
       name: '',
@@ -11,28 +16,64 @@ function Reserve() {
       covidTrace: 0,
       loading: false,
    });
+   const [file, setFile] = useState('');
+
+   useEffect(() => {
+      async function fetchHospitalInfo() {
+         try {
+            const res = await API.get(`/hospital/${id}`);
+            // setHospital(res.data?.data);
+         } catch (err) {
+            console.log(err);
+         }
+      }
+
+      fetchHospitalInfo();
+   }, [id]);
 
    function handleState(e) {
       setState({ ...state, [e.target.name]: e.target.value });
    }
 
-   function reserveBed() {
-      if (!state.name || !state.age || !state.aadhaar) {
-         alert('Enter all fields');
-         return;
-      }
+   async function reserveBed() {
+      try {
+         if (!state.name || !state.age || !state.aadhaar) {
+            alert('Enter all fields');
+            return;
+         }
 
-      if (state.age < 0 || state.age > 150) {
-         alert('Not a valid age');
-         return;
-      }
+         if (state.age < 0 || state.age > 150) {
+            alert('Not a valid age');
+            return;
+         }
 
-      if (!state.aadhaar.match(aadhaarRegex)) {
-         alert('Not a valid aadhaar card');
-         return;
-      }
+         if (!state.aadhaar.match(aadhaarRegex)) {
+            alert('Not a valid aadhaar card');
+            return;
+         }
 
-      alert('Valid');
+         setState((prevState) => ({ ...prevState, loading: true }));
+
+         let formData = new FormData();
+         formData.append('name', state.name);
+         formData.append('age', state.age);
+         formData.append('aadhaarCard', state.aadhaar);
+         formData.append('type', state.type);
+         formData.append('covidTrace', state.covidTrace);
+         formData.append('pdf', file);
+
+         const res = await API.post('/booking/reserve', formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data',
+            },
+         });
+
+         setState((prevState) => ({ ...prevState, loading: false }));
+         console.log(res.data);
+      } catch (err) {
+         setState((prevState) => ({ ...prevState, loading: false }));
+         console.log(err);
+      }
    }
 
    return (
@@ -41,7 +82,7 @@ function Reserve() {
             <h1>Reserve a bed</h1>
             <div className="reserve-details">
                <div className="reserve-container">
-                  <h3 className="reserve-detail-header">Name</h3>
+                  <h3 className="reserve-detail-header">Name*</h3>
                   <div className="reserve-detail-body">
                      <input
                         type="text"
@@ -53,7 +94,7 @@ function Reserve() {
                   </div>
                </div>
                <div className="reserve-container">
-                  <h3 className="reserve-detail-header">Age</h3>
+                  <h3 className="reserve-detail-header">Age*</h3>
                   <div className="reserve-detail-body">
                      <input
                         type="number"
@@ -66,7 +107,7 @@ function Reserve() {
                   </div>
                </div>
                <div className="reserve-container">
-                  <h3 className="reserve-detail-header">Aadhar</h3>
+                  <h3 className="reserve-detail-header">Aadhar*</h3>
                   <div className="reserve-detail-body">
                      <input
                         type="number"
@@ -80,7 +121,7 @@ function Reserve() {
                </div>
 
                <div className="reserve-container">
-                  <h3 className="reserve-detail-header">Type</h3>
+                  <h3 className="reserve-detail-header">Type*</h3>
                   <div className="reserve-detail-body">
                      <select
                         className=" reserve-select"
@@ -94,7 +135,17 @@ function Reserve() {
                   </div>
                </div>
                <div className="reserve-container">
-                  <h3 className="reserve-detail-header">COVID Trace</h3>
+                  <h3 className="reserve-detail-header">COVID Report</h3>
+                  <div className="reserve-detail-body">
+                     <input
+                        type="file"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        accept=".pdf"
+                     />
+                  </div>
+               </div>
+               <div className="reserve-container">
+                  <h3 className="reserve-detail-header">COVID Trace*</h3>
                   <div className="reserve-detail-body">
                      <select
                         className="reserve-select"
@@ -115,6 +166,13 @@ function Reserve() {
             <button className="reserve-btn" onClick={reserveBed}>
                Reserve a bed
             </button>
+
+            {state.loading && (
+               <div className="reserve-custom-loader-container">
+                  <Loader type="Puff" color="#f7c35e" height={48} width={48} />
+                  <p>Reserving a bed</p>
+               </div>
+            )}
          </div>
       </div>
    );

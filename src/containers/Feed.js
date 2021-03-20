@@ -14,7 +14,7 @@ function Feed() {
    useEffect(() => {
       async function fetchHospitals() {
          try {
-            const res = await API.get('/hospital/getAll');
+            const res = await API.get('/hospital/all');
             setLoading(false);
             setHospitals(res.data?.data);
          } catch (err) {
