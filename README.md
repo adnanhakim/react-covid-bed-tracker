@@ -2,7 +2,7 @@
 
 This project is responsible for tracking beds at various hospitals for covid patients in order to avoid too much unnecessary crowding at the hospitals. The main aim of the project is create an easy and effecient way for patients to be able to book these beds and avoid wasting time by manually going and searching for free beds in various hospitals. It has 2 types of logins viz. Hospital Admin and Patients. Patients can reserve a bed at a hospital by filling application form, and the hospital admin can confirm their reservation in person by scanning a QR code.
 
-![Preview](https://imgur.com/W8op4O3)
+![Preview](https://i.imgur.com/W8op4O3.png)
 
 ## Available Scripts
 
@@ -31,6 +31,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+![View](https://imgur.com/utiI2Ry)
 
 # Features
 
