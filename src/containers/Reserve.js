@@ -4,6 +4,7 @@ import './Reserve.css';
 import API from '../utils/API';
 import auth from '../auth/auth';
 import { useParams } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import firebase from '../utils/firebase';
 import 'firebase/storage';
@@ -14,6 +15,7 @@ const storage = firebase.storage();
 
 function Reserve() {
    const { id } = useParams();
+   const history = useHistory();
    const [{ status }, dispatch] = useStateValue();
    const location = useLocation();
    const isReservation = location.pathname.startsWith('/reservation/');
@@ -169,12 +171,18 @@ function Reserve() {
                            loading: false,
                         }));
                         console.log(res.data);
+                        const booking = res.data?.booking;
+                        setTimeout(
+                           () => history.replace(`/reservation/${booking._id}`),
+                           2000
+                        );
                      });
                   } catch (err) {
                      setState((prevState) => ({
                         ...prevState,
                         loading: false,
                      }));
+                     console.log(err);
                   }
                });
          }

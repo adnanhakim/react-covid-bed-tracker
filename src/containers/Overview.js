@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './Overview.css';
@@ -71,8 +72,6 @@ function Overview() {
       async function fetchData() {
          try {
             API.get('/booking/getActiveCase').then((res) => {
-               console.log('lklklklkl;jhbghfxcvfgxfcgvjcfgvghcgvv ', res.data);
-               console.log(res.data.activedata);
                setActiveData(res.data.activedata);
                setRecoveredData(res.data.recoveryData);
             });
@@ -91,10 +90,6 @@ function Overview() {
          sidebar: 'OVERVIEW',
       });
    }, [dispatch]);
-
-   useEffect(() => {
-      console.log(activeData?.length);
-   }, [activeData]);
 
    return (
       <div className="section overview-container">
