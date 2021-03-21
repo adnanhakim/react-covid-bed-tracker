@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Reservations.css';
-import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../state/StateProvider';
 import ReservationCard from '../components/reservation/ReservationCard';
 import API from '../utils/API';
@@ -8,7 +7,6 @@ import auth from '../auth/auth';
 import CustomLoader from '../components/CustomLoader';
 
 function Reservations() {
-   const history = useHistory();
    const [{ status }, dispatch] = useStateValue();
 
    const [loading, setLoading] = useState(true);
@@ -17,9 +15,12 @@ function Reservations() {
    useEffect(() => {
       async function fetchReservations() {
          try {
-            const res = await API.get('/booking/all', {
-               headers: { 'auth-token': auth.getToken() },
-            });
+            const res = await API.get(
+               status === 1 ? '/booking/all' : '/booking/userBookings',
+               {
+                  headers: { 'auth-token': auth.getToken() },
+               }
+            );
             setLoading(false);
             console.log(res.data?.data);
             setReservations(res.data?.data);
@@ -33,15 +34,9 @@ function Reservations() {
 
       dispatch({
          type: 'SET_SIDEBAR',
-         sidebar: 'RESERVATIONS',
+         sidebar: status === 1 ? 'RESERVATIONS' : 'APPLIED',
       });
-   }, [dispatch]);
-
-   useEffect(() => {
-      if (status === 0) {
-         history.replace('/');
-      }
-   }, [status, history]);
+   }, [dispatch, status]);
 
    return loading ? (
       <CustomLoader text="Fetching Reservations" />

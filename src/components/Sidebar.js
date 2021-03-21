@@ -32,7 +32,7 @@ function Sidebar() {
             <SidebarOption
                Icon={NotificationsActiveIcon}
                title={'My Reservations'}
-               link={'/applied'}
+               link={'/reservations'}
                active={sidebar === 'APPLIED'}
                mobileView
             />
