@@ -1,0 +1,77 @@
+.overview-container {
+   display: flex;
+   height: 100%;
+}
+
+.overview {
+   display: grid;
+   grid-template-columns: '50% 50%';
+   width: 100%;
+   gap: 1.5rem;
+   padding: 1.5rem;
+}
+
+.row {
+   display: flex;
+   gap: 1.5rem;
+}
+
+.bigger-section {
+   flex: 3;
+   background-color: lightgray;
+}
+
+.smaller-section {
+   flex: 2;
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+}
+
+.small-card {
+   background-color: var(--sidebar-background);
+   color: var(--text);
+   flex: 1;
+   padding: 1rem 1.5rem;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   border-radius: var(--card-border);
+}
+
+.small-card > p {
+   font-size: 0.875rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1rem;
+   font-weight: 700;
+}
+
+.small-card > h3 {
+   font-size: 1.5rem;
+   text-transform: uppercase;
+   font-family: 'Montserrat', 'Lato', sans-serif;
+}
+
+.active > h3 {
+   color: rgb(255, 75, 75);
+}
+
+.recovered > h3 {
+   color: rgb(113, 253, 113);
+}
+
+.deaths > h3 {
+   color: rgb(255, 180, 119);
+}
+
+.tested > h3 {
+   color: rgb(91, 91, 248);
+}
+
+.hospitals > h3 {
+   color: rgb(255, 255, 103);
+}
+
+.beds > h3 {
+   color: rgb(115, 255, 208);
+}

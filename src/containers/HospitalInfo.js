@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './HospitalInfo.css';
 import API from '../utils/API';
+import auth from '../auth/auth';
 import { Link, useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import CustomLoader from '../components/CustomLoader';
@@ -17,7 +18,9 @@ function HospitalInfo() {
    useEffect(() => {
       async function fetchHospitalInfo() {
          try {
-            const res = await API.get(`/hospital/${id}`);
+            const res = await API.get(`/hospital/${id}`, {
+               headers: { 'auth-token': auth.getToken() },
+            });
 
             setLoading(false);
             setHospital(res.data?.data);

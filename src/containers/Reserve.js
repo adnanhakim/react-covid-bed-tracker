@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './Reserve.css';
 import API from '../utils/API';
+import auth from '../auth/auth';
 import { useParams } from 'react-router';
 import Loader from 'react-loader-spinner';
 import firebase from '../utils/firebase';
@@ -40,7 +41,9 @@ function Reserve() {
                loading: true,
                message: 'Refreshing data',
             }));
-            const res = await API.get(`/hospital/${id}`);
+            const res = await API.get(`/hospital/${id}`, {
+               headers: { 'auth-token': auth.getToken() },
+            });
 
             setHospital(res.data?.data);
             if (state.type == 0 && hospital?.freenormalbeds <= 0) {
@@ -61,7 +64,6 @@ function Reserve() {
                type: 'SET_SELECTED_HOSPITAL_ID',
                selectedHospitalId: res.data?.data?._id,
             });
-            // setHospital(res.data?.data);
          } catch (err) {
             setState((prevState) => ({ ...prevState, loading: false }));
             console.log(err);
@@ -75,12 +77,24 @@ function Reserve() {
                loading: true,
                message: 'Fetching Reservation',
             }));
-            const res = await API.get(`/booking/${id}`);
+            const res = await API.get(`/booking/${id}`, {
+               headers: { 'auth-token': auth.getToken() },
+            });
 
             setReservation(res.data?.data);
             console.log(res.data?.data);
 
             setState((prevState) => ({ ...prevState, loading: false }));
+
+            dispatch({
+               type: 'SET_SELECTED_HOSPITAL',
+               selectedHospital: res.data?.data?.hospitalId?.name,
+            });
+
+            dispatch({
+               type: 'SET_SELECTED_HOSPITAL_ID',
+               selectedHospitalId: res.data?.data?.hospitalId?._id,
+            });
          } catch (err) {
             setState((prevState) => ({ ...prevState, loading: false }));
             console.log(err);
@@ -147,7 +161,9 @@ function Reserve() {
                         pdfLink: url,
                         hospitalId: id,
                      };
-                     API.post('/booking/reserve', data, {}).then((res) => {
+                     API.post('/booking/reserve', data, {
+                        headers: { 'auth-token': auth.getToken() },
+                     }).then((res) => {
                         setState((prevState) => ({
                            ...prevState,
                            loading: false,
@@ -193,10 +209,16 @@ function Reserve() {
 
    async function acceptBed() {
       try {
-         const res = await API.post('/booking/update', {
-            isAccepted: 1,
-            bookingId: id,
-         });
+         const res = await API.post(
+            '/booking/update',
+            {
+               isAccepted: 1,
+               bookingId: id,
+            },
+            {
+               headers: { 'auth-token': auth.getToken() },
+            }
+         );
          if (res.data?.status) {
             alert('Updated');
          } else alert('Error');
@@ -207,10 +229,16 @@ function Reserve() {
 
    async function rejectBed() {
       try {
-         const res = await API.post('/booking/update', {
-            isAccepted: 2,
-            bookingId: id,
-         });
+         const res = await API.post(
+            '/booking/update',
+            {
+               isAccepted: 2,
+               bookingId: id,
+            },
+            {
+               headers: { 'auth-token': auth.getToken() },
+            }
+         );
          if (res.data?.status) {
             alert('Updated');
          } else alert('Error');

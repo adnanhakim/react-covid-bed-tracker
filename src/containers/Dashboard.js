@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import HospitalInfo from './HospitalInfo';
 import Reserve from './Reserve';
 import Reservations from './Reservations';
+import Overview from './Overview';
 
 function Dashboard() {
    return (
@@ -22,6 +23,7 @@ function Dashboard() {
                      exact
                      component={Reserve}
                   />
+                  <Route path="/overview" exact component={Overview} />
                   <Route path="/reservation/:id" exact component={Reserve} />
                   <Route path="/reservations" exact component={Reservations} />
                   <Route path="/sendRequest" exact component={Request} />

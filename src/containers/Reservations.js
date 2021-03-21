@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../state/StateProvider';
 import ReservationCard from '../components/reservation/ReservationCard';
 import API from '../utils/API';
+import auth from '../auth/auth';
 import CustomLoader from '../components/CustomLoader';
 
 function Reservations() {
@@ -16,7 +17,9 @@ function Reservations() {
    useEffect(() => {
       async function fetchReservations() {
          try {
-            const res = await API.get('/booking/all');
+            const res = await API.get('/booking/all', {
+               headers: { 'auth-token': auth.getToken() },
+            });
             setLoading(false);
             console.log(res.data?.data);
             setReservations(res.data?.data);

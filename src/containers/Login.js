@@ -41,14 +41,11 @@ function Login() {
 
    async function login(uid) {
       try {
-         console.log('Saving user...');
-         console.log(uid);
-
          const res = await API.post('/user/save', {
             uid,
             mobileNumber: '+91' + mobileNumber,
          });
-         console.log(res.data);
+
          dispatch({
             type: 'SET_RELOAD',
             reload: !reload,

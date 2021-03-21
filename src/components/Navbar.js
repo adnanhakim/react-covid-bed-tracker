@@ -98,7 +98,12 @@ function Navbar() {
             )}
 
             {sidebar === 'RESERVATION' && (
-               <div className="navbar-breadcrumb">Reservation Details</div>
+               <div className="navbar-breadcrumb">
+                  <Link className="link" to={`/hospital/${selectedHospitalId}`}>
+                     {selectedHospital}
+                  </Link>{' '}
+                  &nbsp;&gt;&nbsp; Reservation Details
+               </div>
             )}
          </div>
          <div className="navbar-right">

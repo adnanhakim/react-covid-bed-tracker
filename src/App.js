@@ -4,6 +4,7 @@ import Dashboard from './containers/Dashboard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './containers/Login';
 import ProtectedRoute from './auth/ProtectedRoute';
+import auth from './auth/auth';
 import AdminLogin from './containers/AdminLogin';
 import { useStateValue } from './state/StateProvider';
 import API from './utils/API';
@@ -12,9 +13,13 @@ function App() {
    const [{ reload }, dispatch] = useStateValue();
 
    useEffect(() => {
+      console.log('hi');
+
       async function fetchUser() {
          try {
-            const res = await API.get('/user');
+            const res = await API.get('/user', {
+               headers: { 'auth-token': auth.getToken() },
+            });
             console.log(res.data);
 
             dispatch({

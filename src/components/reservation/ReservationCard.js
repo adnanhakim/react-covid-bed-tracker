@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function ReservationCard({ id, name, trace, age }) {
    function getPatientTrace(trace) {
-      if (!trace) {
+      if (trace === undefined) {
          return '';
       } else if (trace === 0) {
          return 'No known COVID traces';

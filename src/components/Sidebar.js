@@ -28,13 +28,15 @@ function Sidebar() {
             active={sidebar === 'HOSPITALS'}
             mobileView
          />
-         <SidebarOption
-            Icon={NotificationsActiveIcon}
-            title={'My Reservations'}
-            link={'/applied'}
-            active={sidebar === 'APPLIED'}
-            mobileView
-         />
+         {status === 0 && (
+            <SidebarOption
+               Icon={NotificationsActiveIcon}
+               title={'My Reservations'}
+               link={'/applied'}
+               active={sidebar === 'APPLIED'}
+               mobileView
+            />
+         )}
 
          {status === 1 && <h3>Admin</h3>}
          {status === 1 && (

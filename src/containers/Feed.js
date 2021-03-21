@@ -4,6 +4,7 @@ import CustomLoader from '../components/CustomLoader';
 import './Feed.css';
 import { useStateValue } from '../state/StateProvider';
 import API from '../utils/API';
+import auth from '../auth/auth';
 
 function Feed() {
    const [{ query }, dispatch] = useStateValue();
@@ -14,7 +15,9 @@ function Feed() {
    useEffect(() => {
       async function fetchHospitals() {
          try {
-            const res = await API.get('/hospital/all');
+            const res = await API.get('/hospital/all', {
+               headers: { 'auth-token': auth.getToken() },
+            });
             setLoading(false);
             setHospitals(res.data?.data);
          } catch (err) {

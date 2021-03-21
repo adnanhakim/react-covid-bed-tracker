@@ -37,6 +37,7 @@ function AdminLogin() {
             },
             { withCredentials: true }
          );
+         console.log(res.data);
          dispatch({
             type: 'SET_RELOAD',
             reload: !reload,
