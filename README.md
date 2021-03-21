@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Covid Bed Tracker React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is responsible for tracking beds at various hospitals for covid patients in order to avoid too much unnecessary crowding at the hospitals. The main aim of the project is create an easy and effecient way for patients to be able to book these beds and avoid wasting time by manually going and searching for free beds in various hospitals. It has 2 types of logins viz. Hospital Admin and Patients. Patients can reserve a bed at a hospital by filling application form, and the hospital admin can confirm their reservation in person by scanning a QR code.
 
 ## Available Scripts
 
@@ -39,32 +39,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# Features
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Register and authenticate hospital admins using JSON web tokens
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Register patients using firebase mobile otp authentication
 
-### Code Splitting
+- Searching for free beds in a list of various hospitals that can be filtered based on location
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Chatbot to answer queries related to covid-19 and our platform
 
-### Analyzing the Bundle Size
+- Booking of beds can be done through the platform by providing proof like aadhar in pdf format
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Statistical data and graphs related to current number of covid cases 
 
-### Making a Progressive Web App
+- A flutter app has also been created for scanning QR code to confirm a booking by hospital Admin 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Have a pleasant UI/UX built to look awesome from mobile to desktop
