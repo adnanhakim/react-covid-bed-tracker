@@ -160,6 +160,17 @@
    color: var(--accent);
 }
 
+.reserve-qr-code {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 1.5rem;
+}
+
+.reserve-qr-code > p {
+   width: 150px;
+}
+
 @media screen and (max-width: 1024px) {
    .reserve-detail-body {
       flex: 5;

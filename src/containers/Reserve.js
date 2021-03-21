@@ -9,12 +9,12 @@ import firebase from '../utils/firebase';
 import 'firebase/storage';
 import { useStateValue } from '../state/StateProvider';
 import { useLocation } from 'react-router-dom';
-
+const QRCode = require('qrcode.react');
 const storage = firebase.storage();
 
 function Reserve() {
    const { id } = useParams();
-   const [, dispatch] = useStateValue();
+   const [{ status }, dispatch] = useStateValue();
    const location = useLocation();
    const isReservation = location.pathname.startsWith('/reservation/');
 
@@ -366,25 +366,40 @@ function Reserve() {
                   </button>
                )}
 
-               {isReservation && reservation?.isAccepted === 0 && (
+               {status === 1 && isReservation && reservation?.isAccepted === 0 && (
                   <button className="accept-btn" onClick={acceptBed}>
                      Accept
                   </button>
                )}
 
-               {isReservation && reservation?.isAccepted === 0 && (
+               {status === 1 && isReservation && reservation?.isAccepted === 0 && (
                   <button className="reject-btn" onClick={rejectBed}>
                      Reject
                   </button>
                )}
             </div>
 
-            {reservation?.isAccepted === 1 && reservation?.isActive === 0 && (
-               <h1 className="reserve-status">Awaiting user</h1>
+            {reservation?.isAccepted === 0 && (
+               <h1 className="reserve-status">
+                  Awaiting Confirmation from the hospital
+               </h1>
             )}
 
-            {reservation?.isActive === 1 && (
+            {reservation?.isAccepted === 1 && reservation?.isActive === 0 && (
+               <div className="reserve-qr-code">
+                  <QRCode value={reservation._id} />
+                  <p>Please go to the hospital to confirm your reservation.</p>
+               </div>
+            )}
+
+            {reservation?.isAccepted === 1 && reservation?.isActive === 1 && (
                <h1 className="reserve-status">Room Allocated</h1>
+            )}
+
+            {reservation?.isAccepted === 2 && (
+               <h1 className="reserve-status">
+                  Reservation declined by the hospital
+               </h1>
             )}
 
             {state.loading && (

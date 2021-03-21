@@ -105,6 +105,14 @@ function Navbar() {
                   &nbsp;&gt;&nbsp; Reservation Details
                </div>
             )}
+
+            {sidebar === 'RESERVATIONS' && (
+               <div className="navbar-breadcrumb">Reservations</div>
+            )}
+
+            {sidebar === 'APPLIED' && (
+               <div className="navbar-breadcrumb">My Reservations</div>
+            )}
          </div>
          <div className="navbar-right">
             <div className="navbar-tag">{username}</div>

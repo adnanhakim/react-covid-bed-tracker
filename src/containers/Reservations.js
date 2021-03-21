@@ -43,7 +43,6 @@ function Reservations() {
    ) : (
       <div className="section">
          <div className="reservations">
-            <h3>Reservations</h3>
             <div className="reservation-list">
                {reservations.map((reservation) => (
                   <ReservationCard
