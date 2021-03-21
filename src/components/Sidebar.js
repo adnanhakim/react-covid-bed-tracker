@@ -4,6 +4,7 @@ import SidebarOption from './SidebarOption';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import AssistantIcon from '@material-ui/icons/Assistant';
 import HotelIcon from '@material-ui/icons/Hotel';
 import { useStateValue } from '../state/StateProvider';
 
@@ -34,6 +35,15 @@ function Sidebar() {
                title={'My Reservations'}
                link={'/reservations'}
                active={sidebar === 'APPLIED'}
+               mobileView
+            />
+         )}
+         {status === 0 && (
+            <SidebarOption
+               Icon={AssistantIcon}
+               title={'Chatbot'}
+               link={'/chatbot'}
+               active={sidebar === 'CHATBOT'}
                mobileView
             />
          )}

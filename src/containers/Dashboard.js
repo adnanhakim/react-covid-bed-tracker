@@ -9,6 +9,7 @@ import HospitalInfo from './HospitalInfo';
 import Reserve from './Reserve';
 import Reservations from './Reservations';
 import Overview from './Overview';
+import Chatbot from '../components/Chatbot';
 
 function Dashboard() {
    return (
@@ -24,6 +25,7 @@ function Dashboard() {
                      component={Reserve}
                   />
                   <Route path="/overview" exact component={Overview} />
+                  <Route path="/chatbot" exact component={Chatbot} />
                   <Route path="/reservation/:id" exact component={Reserve} />
                   <Route path="/reservations" exact component={Reservations} />
                   <Route path="/sendRequest" exact component={Request} />

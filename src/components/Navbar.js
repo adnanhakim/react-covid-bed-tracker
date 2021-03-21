@@ -97,6 +97,10 @@ function Navbar() {
                <div className="navbar-breadcrumb">Overview</div>
             )}
 
+            {sidebar === 'CHATBOT' && (
+               <div className="navbar-breadcrumb">Chatbot</div>
+            )}
+
             {sidebar === 'RESERVATION' && (
                <div className="navbar-breadcrumb">
                   <Link className="link" to={`/hospital/${selectedHospitalId}`}>

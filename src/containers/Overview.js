@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './Overview.css';
 import { useStateValue } from '../state/StateProvider';
+import AreaChart from '../components/AreaChart';
+import API from '../utils/API';
 
 function Overview() {
    const [, dispatch] = useStateValue();
@@ -15,6 +17,13 @@ function Overview() {
       totalHospitals: 0,
       totalBeds: 0,
    });
+   const [activeData, setActiveData] = useState([]);
+   const [recoveredData, setRecoveredData] = useState([]);
+
+   function numberWithCommas(x) {
+      if (x === undefined) return '';
+      else return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+   }
 
    useEffect(() => {
       async function fetchStatsLatest() {
@@ -59,15 +68,33 @@ function Overview() {
          }
       }
 
+      async function fetchData() {
+         try {
+            API.get('/booking/getActiveCase').then((res) => {
+               console.log('lklklklkl;jhbghfxcvfgxfcgvjcfgvghcgvv ', res.data);
+               console.log(res.data.activedata);
+               setActiveData(res.data.activedata);
+               setRecoveredData(res.data.recoveryData);
+            });
+         } catch (err) {
+            console.log(err);
+         }
+      }
+
       fetchStatsLatest();
       fetchTestingLatest();
       fetchHospitalBeds();
+      fetchData();
 
       dispatch({
          type: 'SET_SIDEBAR',
          sidebar: 'OVERVIEW',
       });
    }, [dispatch]);
+
+   useEffect(() => {
+      console.log(activeData?.length);
+   }, [activeData]);
 
    return (
       <div className="section overview-container">
@@ -76,33 +103,39 @@ function Overview() {
                <div className="smaller-section">
                   <div className="small-card active">
                      <p>Active</p>
-                     <h3>{statsLatest.active}</h3>
+                     <h3>{numberWithCommas(statsLatest.active)}</h3>
                   </div>
                   <div className="small-card recovered">
                      <p>Recovered</p>
-                     <h3>{statsLatest.recovered}</h3>
+                     <h3>{numberWithCommas(statsLatest.recovered)}</h3>
                   </div>
                   <div className="small-card deaths">
                      <p>Deaths</p>
-                     <h3>{statsLatest.deaths}</h3>
+                     <h3>{numberWithCommas(statsLatest.deaths)}</h3>
                   </div>
                </div>
-               <div className="bigger-section">jj</div>
+               <div className="bigger-section">
+                  <h3>Active Cases</h3>
+                  <AreaChart red={true} />
+               </div>
             </div>
             <div className="row">
-               <div className="bigger-section">jj</div>
+               <div className="bigger-section recovered">
+                  <h3>Recovered Cases</h3>
+                  <AreaChart red={false} />
+               </div>
                <div className="smaller-section">
                   <div className="small-card tested">
                      <p>Tested</p>
-                     <h3>{totalTested}</h3>
+                     <h3>{numberWithCommas(totalTested)}</h3>
                   </div>
                   <div className="small-card hospitals">
                      <p>Hospitals</p>
-                     <h3>{hospitalBeds.totalHospitals}</h3>
+                     <h3>{numberWithCommas(hospitalBeds.totalHospitals)}</h3>
                   </div>
                   <div className="small-card beds">
                      <p>Beds</p>
-                     <h3>{hospitalBeds.totalBeds}</h3>
+                     <h3>{numberWithCommas(hospitalBeds.totalBeds)}</h3>
                   </div>
                </div>
             </div>
