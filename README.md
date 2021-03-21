@@ -35,6 +35,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ![View](https://i.imgur.com/utiI2Ry.png)
 
+![View](https://i.imgur.com/iaYN4Aq.png)
+
 # Features
 
 - Register and authenticate hospital admins using JSON web tokens
@@ -53,4 +55,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 - Have a pleasant UI/UX built to look awesome from mobile to desktop
 
-![OkView](https://i.imgur.com/iaYN4Aq.png)
+![OkView](https://i.imgur.com/dTvrsrk.png)
