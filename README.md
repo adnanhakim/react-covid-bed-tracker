@@ -23,14 +23,14 @@ View the Node.js/Express backend [here](https://github.com/arshshaikh06/covid-be
 -  Adnan Hakim [github.com/adnanhakim](https://github.com/adnanhakim)
    -  React.js Frontend 
 
+-  Bhavesh Singh [github.com/bhaveshsingh0206](https://github.com/bhaveshsingh0206)
+   -  React.js Frontend & Node.js Backend
+
 -  Ali Abbas Rizvi [github.com/rizvialiabbas](https://github.com/rizvialiabbas)
    -  Node.js Backend
 
 -  Arsh Shaikh [github.com/arshshaikh06](https://github.com/arshshaikh06)
    -  Node.js Backend
-
--  Bhavesh Singh [github.com/bhaveshsingh0206](https://github.com/bhaveshsingh0206)
-   -  React.js Frontend & Node.js Backend
 
 ## Flowchart
 
